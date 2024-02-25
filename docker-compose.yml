@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  trino-coordinator:
+    image: trinodb/trino:433
+    container_name: trino-coordinator
+    hostname: trino-coordinator
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 2G
+    networks:
+      trino-internal:
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/v1/status | grep '200'",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  trino-worker:
+    image: trinodb/trino:433
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 2G
+    networks:
+      trino-internal:
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/v1/status | grep '200'",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  trino-internal:
