@@ -7,15 +7,17 @@ services:
     hostname: trino-coordinator
     ports:
       - "8080:8080"
+      - "9080:9080"
+      - "9081:9081"
     deploy:
       resources:
         limits:
           cpus: "0.5"
           memory: 2G
-    networks:
-      trino-internal:
+    network_mode: "host"
     volumes:
       - "${PWD}/coordinator/config.properties:/etc/trino/config.properties"
+      - "${PWD}/coordinator/jvm.config:/etc/trino/jvm.config"
     healthcheck:
       test:
         [
@@ -35,8 +37,7 @@ services:
         limits:
           cpus: "0.5"
           memory: 2G
-    networks:
-      trino-internal:
+    network_mode: "host"
     volumes:
       - "${PWD}/worker/config.properties:/etc/trino/config.properties"
     healthcheck:
@@ -49,6 +50,3 @@ services:
       timeout: 10s
       retries: 3
       start_period: 60s
-
-networks:
-  trino-internal:
