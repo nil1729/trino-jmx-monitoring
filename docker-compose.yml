@@ -14,10 +14,11 @@ services:
         limits:
           cpus: "0.5"
           memory: 2G
-    network_mode: "host"
     volumes:
       - "${PWD}/coordinator/config.properties:/etc/trino/config.properties"
       - "${PWD}/coordinator/jvm.config:/etc/trino/jvm.config"
+    networks:
+      trino-internal:
     healthcheck:
       test:
         [
@@ -37,9 +38,10 @@ services:
         limits:
           cpus: "0.5"
           memory: 2G
-    network_mode: "host"
     volumes:
       - "${PWD}/worker/config.properties:/etc/trino/config.properties"
+    networks:
+      trino-internal:
     healthcheck:
       test:
         [
@@ -50,3 +52,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 60s
+
+networks:
+  trino-internal:
+    driver: bridge
