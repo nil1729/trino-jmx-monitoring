@@ -34,4 +34,4 @@ scrape_configs:
     static_configs:
       - targets: ["trino-coordinator:12345"]
         labels:
-          application: "trino-coordinator"
+          instance: "trino-coordinator"
