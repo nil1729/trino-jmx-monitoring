@@ -15,11 +15,11 @@ This repository guides you through the process of setting up monitoring for Trin
 
 #### Prerequisites
 
-- Please make sure you have minimum of **8GB RAM** and **4 CPU cores** available on your machine to run the Trino cluster locally. Or you can modify the `.env` file to reduce the memory and CPU requirements.
+- Please make sure you have minimum of **8GB RAM** and **4 CPU cores** available on your machine to run the Trino cluster locally. Or you can modify the `.env` file to reduce the memory and CPU resources.
 
 #### Running Trino Cluster
 
-Please modify the `.env` file to adjust the memory and CPU requirements. For this illustration, memory limit is set to `2GB` and CPU limit is set to `0.5`. If you have changed the memory, please make sure to update the `jvm.config` file with the new memory. Read more about [JVM Configuration](https://trino.io/docs/current/installation/deployment.html#jvm-config) for Trino.
+Please modify the `.env` file to adjust the memory and CPU requirements. For this illustration, memory limit is set to `2GB` and CPU limit is set to `1`. If you have changed the memory, please make sure to update the `jvm.config` file with the new memory limits. Read more about [JVM Configuration](https://trino.io/docs/current/installation/deployment.html#jvm-config) for Trino.
 
 ```config
 -Xms1792M
