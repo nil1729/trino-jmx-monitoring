@@ -2,13 +2,15 @@ version: "3.8"
 
 services:
   trino-coordinator:
-    image: trinodb/trino:433
+    build:
+      context: dockerfiles
+      dockerfile: Dockerfile.trino
     container_name: trino-coordinator
     hostname: trino-coordinator
     ports:
       - "8080:8080"
       - "9080:9080"
-      - "9081:9081"
+      - "12345:12345"
     deploy:
       resources:
         limits:
@@ -17,6 +19,7 @@ services:
     volumes:
       - "${PWD}/coordinator/config.properties:/etc/trino/config.properties"
       - "${PWD}/coordinator/jvm.config:/etc/trino/jvm.config"
+      - "${PWD}/coordinator/jmx.config.yaml:/etc/trino/jmx/config.yaml"
     networks:
       trino-internal:
     healthcheck:
@@ -53,6 +56,24 @@ services:
       retries: 3
       start_period: 60s
 
+  prometheus:
+    image: prom/prometheus:v2.50.0 # fix version to avoid breaking changes in future releases
+    container_name: prometheus
+    hostname: prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - "${PWD}/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - prometheus-data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    networks:
+      trino-internal:
+
 networks:
   trino-internal:
     driver: bridge
+
+volumes:
+  prometheus-data:
