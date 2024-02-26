@@ -4,8 +4,8 @@ This repository guides you through the process of setting up monitoring for Trin
 
 ### Considerations
 
-- This integration is based on the [Trino JMX metrics](https://trino.io/docs/current/monitoring-metrics.html) and the [Prometheus JMX exporter](https://github.com/prometheus/jmx_exporter)
-- Trino Version: 433, Prometheus Version: 2.50.0, Grafana Version: 9.5.15
+- This integration is based on the [Trino JMX metrics](https://trino.io/docs/current/admin/jmx.html) and the [Prometheus JMX exporter](https://github.com/prometheus/jmx_exporter)
+- Trino Version: **433**, Prometheus Version: **2.50.0**, Grafana Version: **9.5.15**
 
 ### Architecture (Docker)
 
